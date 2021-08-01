@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 function App() {
 
+  const [search, setSearch] = useState("");
   const [crypto, setCrypto] = useState([]);
   useEffect(() => {
     Axios.get('https://api.coinstats.app/public/v1/coins?skip=0&limit=100&currency=INR')
@@ -15,6 +16,7 @@ function App() {
   return (
     <div className="App">
       <h1>All Cryptocurrencies</h1>
+      <input type="text" placeholder="Search..." onChange={(e) => {setSearch(e.target.value)}}/>
       <table>
         <thead>
           <tr>
@@ -28,7 +30,9 @@ function App() {
           </tr>
         </thead>
         <tbody>
-        {crypto.map((val, id) => {
+          {crypto.filter((val) => {
+            return val.name.toLowerCase().includes(search.toLowerCase());
+          }).map((val, id) => {
           return <>
             <tr id={id}>
               <td className="rank">{val.rank}</td>
