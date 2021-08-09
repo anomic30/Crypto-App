@@ -4,8 +4,11 @@ import { useEffect, useState } from 'react';
 
 function App() {
 
+  // Setting up the inital states using react hook 'useState'
   const [search, setSearch] = useState("");
   const [crypto, setCrypto] = useState([]);
+
+  // Fetching crypto data from the api only once when the component is mounted
   useEffect(() => {
     Axios.get('https://api.coinstats.app/public/v1/coins?skip=0&limit=100&currency=INR')
       .then((res) => {
@@ -36,7 +39,7 @@ function App() {
           return <>
             <tr id={id}>
               <td className="rank">{val.rank}</td>
-              <td className="logo"><img src={ val.icon } alt="logo" width="30px"/><p>{val.name}</p></td>
+              <td className="logo"><a href={val.websiteUrl}><img src={ val.icon } alt="logo" width="30px"/></a><p>{val.name}</p></td>
               <td className="symbol">{val.symbol}</td>
               <td>&#8377;{val.marketCap}</td>
               <td>&#8377;{val.price.toFixed(2)}</td>
